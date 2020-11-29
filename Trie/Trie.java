@@ -89,7 +89,7 @@ public class Trie {
 		return false;
 	}
 	
-		private void printWordsBeginWith(String words, String currentWord, int index, boolean sequenceCompleted, Node parent) {
+	private void printWordsBeginWith(String words, String currentWord, int index, boolean sequenceCompleted, Node parent) {
 		  if(parent.endOfWord) {
 			  System.out.println(currentWord);
 			  return;
