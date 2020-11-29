@@ -30,6 +30,11 @@ public class Trie {
 	public void printTree() {
 		print("", root);
 	}
+	
+	public void printWordsBeginWith(String firstFewLetters) {
+		System.out.println("Words Begin with " + firstFewLetters.toUpperCase() + " : ");
+		printWordsBeginWith(firstFewLetters.toUpperCase(), "", 0, false, root);
+	}
 	//----------------------------------Helper Methods Section-----------------------------------
 	private void add(String word, int index, Node parent) {
 		if(index == word.length()) {
@@ -82,6 +87,29 @@ public class Trie {
 	    }
 	    
 		return false;
+	}
+	
+		private void printWordsBeginWith(String words, String currentWord, int index, boolean sequenceCompleted, Node parent) {
+		  if(parent.endOfWord) {
+			  System.out.println(currentWord);
+			  return;
+		  }
+		  if(index == words.length()) sequenceCompleted = true;
+		  if(index < words.length()) {
+			  char currentCharacter = words.charAt(index);
+			  if(!parent.childrens.containsKey(currentCharacter) && !sequenceCompleted) 
+				  return;
+		      if(!sequenceCompleted && parent.childrens.containsKey(currentCharacter)) 
+		    	  printWordsBeginWith(words, currentWord + currentCharacter, index + 1, 
+		    			    sequenceCompleted, parent.childrens.get(currentCharacter));   
+		  }else{
+	    	  //traverse everything in the map  
+	    	  HashMap<Character, Node> childrens = parent.childrens;
+	    	  for(Map.Entry<Character, Node> entry : childrens.entrySet()) {
+	    		   printWordsBeginWith(words, currentWord + entry.getKey().toString(), 
+	    				   index, sequenceCompleted, entry.getValue());
+	    	  }
+	      }
 	}
 	
 	
